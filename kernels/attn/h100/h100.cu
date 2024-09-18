@@ -194,18 +194,18 @@ void fwd_attend_ker(int N, int heads_ratio, const CUtensorMap* tma_q, const CUte
             tma::store_commit_group(); 
         }
 
-        log(norm_vec, norm_vec);
-        add(norm_vec, norm_vec, max_vec);
-        __syncthreads();
+        // log(norm_vec, norm_vec);
+        // add(norm_vec, norm_vec, max_vec);
+        // __syncthreads();
     
-        warpgroup::store(l_smem[warpgroupid], norm_vec);
-        __syncthreads();
-        
-        if (warpid % 4 == 0) {
-            int tile_idx = (blockIdx.y * CONSUMER_WARPGROUPS * gridDim.x) + (blockIdx.x * CONSUMER_WARPGROUPS) + warpgroupid; 
-            tma::store_async(tma_l, l_smem[warpgroupid], tile_idx); 
-            tma::store_commit_group(); 
-        }
+        // warpgroup::store(l_smem[warpgroupid], norm_vec);
+        // __syncthreads();
+        // 
+        // if (warpid % 4 == 0) {
+        //     int tile_idx = (blockIdx.y * CONSUMER_WARPGROUPS * gridDim.x) + (blockIdx.x * CONSUMER_WARPGROUPS) + warpgroupid; 
+        //     tma::store_async(tma_l, l_smem[warpgroupid], tile_idx); 
+        //     tma::store_commit_group(); 
+        // }
     
         tma::store_async_wait();
     }
